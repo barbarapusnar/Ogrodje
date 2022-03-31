@@ -74,7 +74,35 @@ public class Vislice extends IgraZaDva implements IIgra{
     }
     @Override
     public void igraj(IUserInterface ui) {
-        
+        if (rač1!=null)
+         ui.report("Igralec 1 je "+rač1.toString());
+       if (rač2!=null)
+         ui.report("Igralec 2 je "+rač2.toString());
+         while(!jeKonecIgre())
+         {
+            IPlayer rač=null;
+            ui.report(reportIgre());
+            switch(getIgralec())
+            {
+             case IGRALECENA:
+             rač=rač1;
+             break;
+             case IGRALECDVA:
+             rač=rač2;
+             break;
+            }
+            if (rač!=null)
+            {
+             ui.report(poteza(rač.narediPotezo()));
+
+            }
+            else
+            {
+                ui.prompt(getPromptIgre());
+                ui.report(poteza(ui.getUserInput()));
+            }
+         }//konec while
+         ui.report(reportIgre());
     }
     @Override
     public boolean jeKonecIgre() {
