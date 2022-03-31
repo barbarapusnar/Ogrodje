@@ -18,6 +18,6 @@ public class Vislice {
         };
         int n=(int)(Math.random()*10);
         skritaBeseda=vsebesede[n];
-        ///
+      
     }
 }
