@@ -1,11 +1,9 @@
 public class Glavni {
     public static void main(String[] args) {
-        TekstovniVmesnik t=new TekstovniVmesnik();
-        Palcke p=new Palcke();
-        NakljucniIgralec r=new NakljucniIgralec();
-        p.dodajRačIgralca(r);
-        // NakljucniIgralec s=new NakljucniIgralec();
-        // p.dodajRačIgralca(s);
-        p.igraj(t);
+        TekstovniVmesnik t=new TekstovniVmesnik();    
+        Vislice v=new Vislice(); //nova igra
+        IgralecVislic iv=new IgralecVislic(); //človek proti račinalniku
+        v.dodajRačIgralca(iv); //dodam rač kot igralca
+        v.igraj(t); 
     }
 }

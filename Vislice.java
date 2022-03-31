@@ -1,7 +1,10 @@
 
 
-public class Vislice {
+public class Vislice extends IgraZaDva implements IIgra{
     private String skritaBeseda;
+    private StringBuffer tekočaBeseda;
+    private StringBuffer prejšnjeČrke;
+    private int štČrkDoKonca;
     public Vislice() {
         String[] vsebesede=
         {
@@ -18,6 +21,67 @@ public class Vislice {
         };
         int n=(int)(Math.random()*10);
         skritaBeseda=vsebesede[n];
-      //to je test
+        //dodaj v tekočaBeseda vse *, toliko kot je dolga skritaBeseda
+        tekočaBeseda=new StringBuffer();
+        for(int k=0;k<skritaBeseda.length();k++)
+         tekočaBeseda.append("*");
+        prejšnjeČrke=new StringBuffer();
+        štČrkDoKonca=skritaBeseda.length();
+    }
+    public boolean uganiČrko(char črka)
+    {
+        //če črke ni v skriti besedi, potem vrni false, dodaj jo samo v prejšnje črke
+        prejšnjeČrke.append(črka);
+        if (skritaBeseda.indexOf(črka)==-1)
+           return false;
+        //tukaj vem, da črka obstaja v skriti besedi
+        //zamenjaj * v tekočiBesedi s črko
+        for (int k=0;k<skritaBeseda.length();k++)
+        {
+            if (skritaBeseda.charAt(k)==črka)
+            {
+                if (tekočaBeseda.charAt(k)!='*') return false;
+                tekočaBeseda.setCharAt(k, črka);
+                štČrkDoKonca--;
+            }
+        }
+        return true;
+    }
+    @Override
+    public String getPromptIgre() {
+       
+        return "Vnesi naslednjo črko ";
+    }
+    @Override
+    public String reportIgre() {
+        if (!jeKonecIgre())
+        return "Trenutna beseda "+tekočaBeseda.toString()+
+               "\nŽe ugibane črke "+prejšnjeČrke.toString()+
+               "\nNa vrsti je igralec "+getIgralec();
+        else
+         return "Zmagal je "+dobiZmagovalca();
+    }
+    public String poteza(String s)
+    {
+        char črka=s.toUpperCase().charAt(0);
+        if (uganiČrko(črka))
+          return "To je prava črka";
+        else
+        {
+            spremeniIgralca();
+            return "Te črke žal ni";
+        }
+    }
+    @Override
+    public void igraj(IUserInterface ui) {
+        
+    }
+    @Override
+    public boolean jeKonecIgre() {
+       return štČrkDoKonca<=0;
+    }
+    @Override
+    public String dobiZmagovalca() {
+       return getIgralec()+"";
     }
 }
